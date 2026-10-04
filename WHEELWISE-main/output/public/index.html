@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WheelWise | Vehicle Rental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#090909; --panel:#111111; --panel2:#171717; --line:#292929;
+  --gold:#f5b400; --gold2:#ffc933; --text:#f6f6f6; --muted:#9b9b9b;
+  --success:#7bd88f; --danger:#ff6b6b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+
+.nav{
+  height:76px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;border-bottom:1px solid #202020;background:rgba(9,9,9,.96);
+  position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)
+}
+.logo{display:flex;align-items:center;gap:11px;font-size:21px;font-weight:800;letter-spacing:-.5px}
+.logo-mark{width:38px;height:38px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-weight:800}
+.navlinks{display:flex;gap:30px;color:#aaa;font-size:14px;font-weight:600}
+.navlinks a:hover{color:var(--gold)}
+.nav-actions{display:flex;gap:10px}
+.btn{border:0;border-radius:9px;padding:11px 18px;font-weight:700;transition:.2s}
+.btn-gold{background:var(--gold);color:#0b0b0b}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-dark{background:#171717;color:#fff;border:1px solid #303030}
+.btn-dark:hover{border-color:#555}
+.btn-wide{width:100%}
+
+.hero{min-height:610px;padding:85px 6% 70px;display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:800;margin-bottom:20px}
+.eyebrow:before{content:"";width:28px;height:2px;background:var(--gold)}
+h1{font-size:clamp(45px,6vw,78px);line-height:.98;letter-spacing:-4px;max-width:720px}
+.hero h1 span{color:var(--gold)}
+.hero p{max-width:590px;color:#aaa;font-size:16px;margin:24px 0 30px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-note{margin-top:25px;color:#666;font-size:12px}
+
+.hero-visual{height:410px;position:relative;border:1px solid #242424;border-radius:24px;overflow:hidden;background:
+ radial-gradient(circle at 65% 35%,rgba(245,180,0,.15),transparent 30%),
+ linear-gradient(145deg,#161616,#080808)}
+.wheel{position:absolute;width:290px;height:290px;border:18px solid #252525;border-radius:50%;right:70px;top:60px;box-shadow:0 0 0 2px #3a3a3a inset}
+.wheel:before,.wheel:after{content:"";position:absolute;left:50%;top:50%;background:#3b3b3b;transform-origin:center}
+.wheel:before{width:245px;height:10px;transform:translate(-50%,-50%) rotate(45deg)}
+.wheel:after{width:245px;height:10px;transform:translate(-50%,-50%) rotate(-45deg)}
+.wheel-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:82px;height:82px;border-radius:50%;background:#0c0c0c;border:13px solid var(--gold);display:grid;place-items:center;font-size:24px;font-weight:800;color:var(--gold)}
+.visual-label{position:absolute;left:28px;bottom:27px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#777}
+.visual-number{position:absolute;right:28px;bottom:22px;font-size:42px;font-weight:800;color:#222}
+
+.section{padding:78px 6%;border-top:1px solid #1c1c1c}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:30px}
+.kicker{font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:800}
+.section h2{font-size:34px;letter-spacing:-1.5px;margin-top:6px}
+.section-head p{color:#777;font-size:13px;max-width:380px;text-align:right}
+
+.category-switch{display:flex;gap:8px;background:#111;padding:6px;border:1px solid #242424;border-radius:12px;width:max-content;margin-bottom:28px}
+.category-switch button{background:transparent;border:0;color:#888;padding:12px 25px;border-radius:8px;font-size:13px;font-weight:800}
+.category-switch button.active{background:var(--gold);color:#080808}
+
+.vehicle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.vehicle-card{background:var(--panel);border:1px solid #252525;border-radius:16px;overflow:hidden;transition:.25s}
+.vehicle-card:hover{transform:translateY(-5px);border-color:#555}
+.vehicle-img{height:190px;background:linear-gradient(145deg,#1d1d1d,#0c0c0c);display:grid;place-items:center;position:relative}
+.vehicle-icon{font-size:76px;filter:grayscale(1)}
+.vehicle-tag{position:absolute;top:14px;left:14px;background:#0c0c0c;border:1px solid #333;border-radius:20px;padding:5px 9px;font-size:10px;color:#aaa}
+.vehicle-body{padding:18px}
+.vehicle-body h3{font-size:19px;margin-bottom:5px}
+.vehicle-meta{font-size:12px;color:#777;margin-bottom:17px}
+.price-row{display:flex;align-items:center;justify-content:space-between}
+.price{font-size:18px;font-weight:800}.price small{font-size:11px;color:#777;font-weight:500}
+.rent-btn{padding:9px 14px;border-radius:8px;background:var(--gold);border:0;font-weight:800;font-size:12px}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feature{padding:25px;background:#101010;border:1px solid #242424;border-radius:14px}
+.feature b{display:block;margin-bottom:8px;font-size:15px}
+.feature p{color:#777;font-size:12px}
+
+footer{padding:30px 6%;border-top:1px solid #202020;display:flex;justify-content:space-between;color:#666;font-size:12px}
+
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:50;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.modal-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:#111;border:1px solid #303030;border-radius:18px;padding:28px;box-shadow:0 20px 80px rgba(0,0,0,.6)}
+.modal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.modal-top h3{font-size:22px}.close{background:none;border:0;color:#888;font-size:25px}
+.stepbar{display:flex;gap:5px;margin-bottom:25px}
+.step{height:3px;flex:1;background:#2b2b2b;border-radius:3px}.step.active{background:var(--gold)}
+.form-step{display:none}.form-step.active{display:block}
+label{display:block;font-size:11px;color:#999;margin:0 0 7px}
+input,select{width:100%;background:#0a0a0a;color:#fff;border:1px solid #303030;border-radius:9px;padding:12px 13px;outline:none;margin-bottom:15px}
+input:focus,select:focus{border-color:var(--gold)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid input,.form-grid select{margin-bottom:0}
+.step-actions{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.summary{border:1px solid #292929;border-radius:12px;padding:18px;background:#0b0b0b}
+.summary-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1d1d1d;font-size:13px}.summary-row:last-child{border:0}.summary-row span:first-child{color:#777}
+.payment-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pay-option{position:relative}
+.pay-option input{position:absolute;opacity:0}
+.pay-option label{border:1px solid #303030;border-radius:10px;padding:14px;text-align:center;color:#aaa;cursor:pointer;margin:0}
+.pay-option input:checked+label{border-color:var(--gold);color:var(--gold);background:#181300}
+
+#bookingMessage,#loginMessage,#registerMessage,#returnMessage,#deleteVehicleMessage,#adminLoginMessage{font-size:12px;color:var(--gold);margin-top:10px}
+
+.hidden-functional{display:none!important}
+.admin-panel{width:min(900px,100%)}
+.admin-tabs{display:flex;gap:8px;margin-bottom:18px}.admin-tabs button{padding:9px 14px;background:#181818;color:#aaa;border:1px solid #303030;border-radius:8px}
+.admin-data{border:1px solid #282828;border-radius:12px;padding:16px;min-height:100px;color:#888;font-size:13px}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding-top:55px}.hero-visual{height:300px}
+  .vehicle-grid{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:1fr}
+  .navlinks{display:none}
+}
+@media(max-width:600px){
+  .nav{padding:0 4%}.nav-actions .btn-dark{display:none}
+  .hero,.section{padding-left:4%;padding-right:4%}
+  h1{letter-spacing:-2.5px;font-size:46px}.vehicle-grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}
+  footer{padding:25px 4%;display:block}.wheel{right:-30px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="logo" href="#">
+    <span class="logo-mark">W</span>
+    <span>WHEEL<span style="color:var(--gold)">WISE</span></span>
+  </a>
+  <nav class="navlinks">
+    <a href="#vehicles">Vehicles</a>
+    <a href="#why">Why WheelWise</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="btn btn-dark" id="loginBtn">Login</button>
+    <button class="btn btn-gold" id="exploreBtn">Rent a Vehicle</button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <div class="eyebrow">Smart vehicle rentals</div>
+    <h1>Your ride.<br><span>Your rules.</span></h1>
+    <p>Choose a bike or car, select your rental duration, add your details and book — all in one simple flow.</p>
+    <div class="hero-actions">
+      <button class="btn btn-gold" id="heroRentBtn">Explore Vehicles</button>
+      <a class="btn btn-dark" href="#why">How it works</a>
+    </div>
+    <div class="hero-note">Simple booking • Flexible rentals • Secure payment</div>
+  </div>
+  <div class="hero-visual" aria-label="WheelWise visual">
+    <div class="wheel"><div class="wheel-core">W</div></div>
+    <div class="visual-label">WheelWise / Drive better</div>
+    <div class="visual-number">01</div>
+  </div>
+</section>
+
+<section class="section" id="vehicles">
+  <div class="section-head">
+    <div><div class="kicker">Our fleet</div><h2>Pick your ride</h2></div>
+    <p>Start with a category. Then choose the vehicle that fits your journey.</p>
+  </div>
+
+  <div class="category-switch">
+    <button class="active" data-category="2w">2-WHEELERS</button>
+    <button data-category="4w">4-WHEELERS</button>
+  </div>
+
+  <div class="vehicle-grid" id="vehicleGrid">
+    <article class="vehicle-card" data-category="2w">
+      <div class="vehicle-img"><span class="vehicle-icon">🏍️</span><span class="vehicle-tag">2-WHEELER</span></div>
+      <div class="vehicle-body">
+        <h3>Street Bike</h3><div class="vehicle-meta">Bike · Manual · Petrol</div>
+        <div class="price-row"><div class="price">₹799 <small>/ day</small></div><button class="rent-btn rent-now" data-vehicle="Street Bike" data-price="799">RENT NOW</button></div>
+      </div>
+    </article>
+    <article class="vehicle-card" data-category="2w">
+      <div class="vehicle-img"><span class="vehicle-icon">🛵</span><span class="vehicle-tag">2-WHEELER</span></div>
+      <div class="vehicle-body">
+        <h3>City Scooter</h3><div class="vehicle-meta">Scooter · Automatic · Petrol</div>
+        <div class="price-row"><div class="price">₹599 <small>/ day</small></div><button class="rent-btn rent-now" data-vehicle="City Scooter" data-price="599">RENT NOW</button></div>
+      </div>
+    </article>
+    <article class="vehicle-card" data-category="4w">
+      <div class="vehicle-img"><span class="vehicle-icon">🚗</span><span class="vehicle-tag">4-WHEELER</span></div>
+      <div class="vehicle-body">
+        <h3>Premium Sedan</h3><div class="vehicle-meta">Sedan · Automatic · Petrol</div>
+        <div class="price-row"><div class="price">₹4,999 <small>/ day</small></div><button class="rent-btn rent-now" data-vehicle="Premium Sedan" data-price="4999">RENT NOW</button></div>
+      </div>
+    </article>
+    <article class="vehicle-card" data-category="4w">
+      <div class="vehicle-img"><span class="vehicle-icon">🚙</span><span class="vehicle-tag">4-WHEELER</span></div>
+      <div class="vehicle-body">
+        <h3>Family SUV</h3><div class="vehicle-meta">SUV · Automatic · Petrol</div>
+        <div class="price-row"><div class="price">₹5,499 <small>/ day</small></div><button class="rent-btn rent-now" data-vehicle="Family SUV" data-price="5499">RENT NOW</button></div>
+      </div>
+    </article>
+    <article class="vehicle-card" data-category="2w">
+      <div class="vehicle-img"><span class="vehicle-icon">🏍️</span><span class="vehicle-tag">2-WHEELER</span></div>
+      <div class="vehicle-body">
+        <h3>Classic Bike</h3><div class="vehicle-meta">Bike · Manual · Petrol</div>
+        <div class="price-row"><div class="price">₹899 <small>/ day</small></div><button class="rent-btn rent-now" data-vehicle="Classic Bike" data-price="899">RENT NOW</button></div>
+      </div>
+    </article>
+    <article class="vehicle-card" data-category="4w">
+      <div class="vehicle-img"><span class="vehicle-icon">🚘</span><span class="vehicle-tag">4-WHEELER</span></div>
+      <div class="vehicle-body">
+        <h3>City Car</h3><div class="vehicle-meta">Car · Manual · Petrol</div>
+        <div class="price-row"><div class="price">₹2,999 <small>/ day</small></div><button class="rent-btn rent-now" data-vehicle="City Car" data-price="2999">RENT NOW</button></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="why">
+  <div class="section-head"><div><div class="kicker">The WheelWise way</div><h2>Built for easy renting</h2></div></div>
+  <div class="features">
+    <div class="feature"><b>01 — Choose</b><p>Pick 2-wheelers or 4-wheelers and select the vehicle you want.</p></div>
+    <div class="feature"><b>02 — Book</b><p>Enter your details, choose days and select a payment method.</p></div>
+    <div class="feature"><b>03 — Drive</b><p>Get your booking details and enjoy a simple rental experience.</p></div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="section-head">
+    <div><div class="kicker">WheelWise</div><h2>Ready to hit the road?</h2></div>
+    <button class="btn btn-gold" id="contactRentBtn">Start a Booking</button>
+  </div>
+</section>
+
+<!-- Existing app.js-compatible forms are kept hidden so the current backend logic can still find their IDs. -->
+<div class="hidden-functional" aria-hidden="true">
+  <form id="registerForm"><input id="registerUsername"><input id="registerPassword"><div id="registerMessage"></div></form>
+  <form id="loginForm"><input id="loginUsername"><input id="loginPassword"><div id="loginMessage"></div></form>
+  <form id="bookingForm"><input id="bookingUsername"><input id="bookingVehicleId"><input id="bookingDays"><div id="bookingMessage"></div></form>
+  <form id="addVehicleForm"><input id="vehicleName"><input id="vehiclePrice"><select id="vehicleType"><option>Car</option><option>Bike</option><option>SUV</option></select><select id="vehicleStatus"><option>Available</option></select></form>
+  <form id="deleteVehicleForm"><input id="deleteVehicleId"><div id="deleteVehicleMessage"></div></form>
+  <form id="returnForm"><input id="returnUsername"><input id="returnVehicleId"><div id="returnMessage"></div></form>
+  <form id="adminLoginForm"><input id="adminUsername"><input id="adminPassword"><div id="adminLoginMessage"></div></form>
+  <form id="historyForm"><input id="historyUsername"><div id="historyData"></div></form>
+  <div id="userDashboard"></div><button id="logoutBtn"></button>
+  <div id="statusBadge"></div><div id="adminData"></div><div id="paymentData"></div>
+  <button id="loadAdminData"></button><button id="loadPayments"></button>
+</div>
+
+</main>
+
+<footer>
+  <span>© 2026 WheelWise — Vehicle Rental Management System</span>
+  <span>Built for a college OOP project</span>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal" id="bookingModal">
+  <div class="modal-box">
+    <div class="modal-top"><h3>Book your ride</h3><button class="close" data-close="bookingModal">×</button></div>
+    <div class="stepbar"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
+
+    <div class="form-step active" data-step="1">
+      <div class="kicker">01 / Vehicle</div>
+      <h2 id="selectedVehicleName" style="font-size:27px;margin:7px 0 20px">Select a vehicle</h2>
+      <label>Rental duration</label>
+      <input type="number" id="modalDays" min="1" value="1" placeholder="Number of days">
+      <div class="summary"><div class="summary-row"><span>Rate</span><b id="modalRate">₹0/day</b></div><div class="summary-row"><span>Estimated total</span><b id="modalTotal">₹0</b></div></div>
+      <div class="step-actions"><span></span><button class="btn btn-gold next-step">Continue</button></div>
+    </div>
+
+    <div class="form-step" data-step="2">
+      <div class="kicker">02 / Customer</div><h2 style="font-size:27px;margin:7px 0 20px">Your details</h2>
+      <div class="form-grid">
+        <div><label>Full name</label><input id="modalName" placeholder="Enter name"></div>
+        <div><label>Mobile number</label><input id="modalMobile" placeholder="10-digit mobile"></div>
+      </div>
+      <label>Driving license number</label><input id="modalLicense" placeholder="Enter license number">
+      <div class="step-actions"><button class="btn btn-dark prev-step">Back</button><button class="btn btn-gold next-step">Continue</button></div>
+    </div>
+
+    <div class="form-step" data-step="3">
+      <div class="kicker">03 / Payment</div><h2 style="font-size:27px;margin:7px 0 20px">Choose payment</h2>
+      <div class="payment-options">
+        <div class="pay-option"><input type="radio" name="pay" id="cash" value="Cash" checked><label for="cash">Cash</label></div>
+        <div class="pay-option"><input type="radio" name="pay" id="upi" value="UPI"><label for="upi">UPI</label></div>
+        <div class="pay-option"><input type="radio" name="pay" id="card" value="Card"><label for="card">Card</label></div>
+      </div>
+      <div class="step-actions"><button class="btn btn-dark prev-step">Back</button><button class="btn btn-gold next-step">Review</button></div>
+    </div>
+
+    <div class="form-step" data-step="4">
+      <div class="kicker">04 / Confirm</div><h2 style="font-size:27px;margin:7px 0 20px">Booking details</h2>
+      <div class="summary">
+        <div class="summary-row"><span>Customer</span><b id="reviewName">—</b></div>
+        <div class="summary-row"><span>Vehicle</span><b id="reviewVehicle">—</b></div>
+        <div class="summary-row"><span>Duration</span><b id="reviewDays">—</b></div>
+        <div class="summary-row"><span>Payment</span><b id="reviewPayment">—</b></div>
+        <div class="summary-row"><span>Total</span><b id="reviewTotal" style="color:var(--gold)">—</b></div>
+      </div>
+      <p id="modalMessage" style="font-size:12px;color:#777;margin-top:12px"></p>
+      <div class="step-actions"><button class="btn btn-dark prev-step">Back</button><button class="btn btn-gold" id="confirmBooking">CONFIRM BOOKING</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-box">
+    <div class="modal-top"><h3>Welcome back</h3><button class="close" data-close="loginModal">×</button></div>
+    <div class="kicker">WheelWise account</div>
+    <p style="color:#777;font-size:13px;margin:8px 0 20px">Login to manage your bookings.</p>
+    <label>Username</label><input id="loginModalUsername" placeholder="Username">
+    <label>Password</label><input id="loginModalPassword" type="password" placeholder="Password">
+    <button class="btn btn-gold btn-wide" id="modalLoginSubmit">LOGIN</button>
+    <p id="modalLoginMessage" style="font-size:12px;color:#777;margin-top:10px"></p>
+  </div>
+</div>
+
+<!-- Existing booking summary IDs retained for app.js -->
+<div class="modal" id="summaryModal">
+  <div class="modal-box">
+    <div class="modal-top"><h3>Booking Summary</h3><button class="close" id="closeSummaryModal">×</button></div>
+    <div class="summary">
+      <div class="summary-row"><span>Customer</span><b id="summaryCustomer">—</b></div>
+      <div class="summary-row"><span>Vehicle</span><b id="summaryVehicle">—</b></div>
+      <div class="summary-row"><span>Duration</span><b id="summaryDuration">—</b></div>
+      <div class="summary-row"><span>Total</span><b id="summaryTotal">—</b></div>
+    </div>
+    <button class="btn btn-gold btn-wide" id="confirmSummaryBtn" style="margin-top:16px">CONFIRM</button>
+  </div>
+</div>
+
+<script>
+const bookingModal=document.getElementById('bookingModal');
+let selectedVehicle='', selectedPrice=0, currentStep=1;
+
+function openBooking(vehicle='',price=0){
+  selectedVehicle=vehicle; selectedPrice=Number(price)||0; currentStep=1;
+  document.getElementById('selectedVehicleName').textContent=vehicle||'Select a vehicle';
+  document.getElementById('modalRate').textContent='₹'+selectedPrice.toLocaleString('en-IN')+'/day';
+  updateTotal(); showStep(1); bookingModal.classList.add('show');
+}
+function updateTotal(){
+  const days=Math.max(1,Number(document.getElementById('modalDays').value)||1);
+  document.getElementById('modalTotal').textContent='₹'+(selectedPrice*days).toLocaleString('en-IN');
+}
+function showStep(n){
+  currentStep=n;
+  document.querySelectorAll('.form-step').forEach(s=>s.classList.toggle('active',Number(s.dataset.step)===n));
+  document.querySelectorAll('.stepbar .step').forEach((s,i)=>s.classList.toggle('active',i<n));
+  if(n===4){
+    const days=Math.max(1,Number(document.getElementById('modalDays').value)||1);
+    const payment=document.querySelector('input[name="pay"]:checked')?.value||'Cash';
+    document.getElementById('reviewName').textContent=document.getElementById('modalName').value||'—';
+    document.getElementById('reviewVehicle').textContent=selectedVehicle||'—';
+    document.getElementById('reviewDays').textContent=days+' day(s)';
+    document.getElementById('reviewPayment').textContent=payment;
+    document.getElementById('reviewTotal').textContent='₹'+(selectedPrice*days).toLocaleString('en-IN');
+  }
+}
+document.getElementById('modalDays').addEventListener('input',updateTotal);
+document.querySelectorAll('.rent-now').forEach(btn=>btn.addEventListener('click',()=>openBooking(btn.dataset.vehicle,btn.dataset.price)));
+document.querySelectorAll('.next-step').forEach(b=>b.addEventListener('click',()=>showStep(Math.min(4,currentStep+1))));
+document.querySelectorAll('.prev-step').forEach(b=>b.addEventListener('click',()=>showStep(Math.max(1,currentStep-1))));
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.close).classList.remove('show')));
+document.getElementById('bookingModal').addEventListener('click',e=>{if(e.target===bookingModal)bookingModal.classList.remove('show')});
+
+document.querySelectorAll('.category-switch button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.category-switch button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+    const cat=btn.dataset.category;
+    document.querySelectorAll('.vehicle-card').forEach(card=>card.style.display=card.dataset.category===cat?'block':'none');
+  });
+});
+document.querySelector('.category-switch button.active').click();
+
+['exploreBtn','heroRentBtn','contactRentBtn'].forEach(id=>document.getElementById(id).addEventListener('click',()=>document.getElementById('vehicles').scrollIntoView({behavior:'smooth'})));
+
+document.getElementById('loginBtn').addEventListener('click',()=>document.getElementById('loginModal').classList.add('show'));
+document.getElementById('modalLoginSubmit').addEventListener('click',()=>{
+  document.getElementById('modalLoginMessage').textContent='Login form connected. Your existing app.js can handle authentication.';
+});
+document.getElementById('confirmBooking').addEventListener('click',()=>{
+  document.getElementById('modalMessage').textContent='Booking ready. Connect this button to your existing booking handler in app.js.';
+});
+
+document.getElementById('closeSummaryModal').addEventListener('click',()=>document.getElementById('summaryModal').classList.remove('show'));
+</script>
+
+<!-- Keep your existing application logic if available -->
+<script src="app.js"></script>
+</body>
+</html>

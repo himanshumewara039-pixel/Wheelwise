@@ -1,0 +1,11 @@
+{"id":1001,"name":"thar","price":4999,"type":"Car","status":"Rented"}
+{"id":1002,"name":"swift","price":3999,"type":"Car","status":"Rented"}
+{"id":1004,"name":"SUV","price":7999,"type":"Car","status":"Available"}
+{"id":1005,"name":"scorpio-N","price":7999,"type":"Car","status":"Rented"}
+{"id":1008,"name":"bullet","price":999,"type":"Bike","status":"Rented"}
+{"id":1010,"name":"splender","price":499,"type":"Bike","status":"Available"}
+{"id":1011,"name":"kawasaki","price":1499,"type":"Bike","status":"Available"}
+{"id":1012,"name":"activa","price":499,"type":"Bike","status":"Available"}
+{"id":1015,"name":"GT-650","price":1499,"type":"Bike","status":"Available"}1111 thar 4000 Car Available
+1005 bullet 1999 Bike Available
+1001 dzire 3999 Car Available

@@ -1,0 +1,12 @@
+testuser 1001 3 14997 Returned
+testuser 1002 3 11997 Returned
+testuser 1004 3 23997 Returned
+testuser 1005 3 23997 Returned
+testuser 1001 3 14997 Returned
+testuser 1002 3 11997 Returned
+testuser 1004 3 23997 Returned
+testuser 1005 3 23997 Active
+testuser 1001 3 14997 Active
+browser_gt8u2k 1008 2 1998 Active
+hkd 1002 2 7998 Returned
+testuser 1002 3 11997 Active

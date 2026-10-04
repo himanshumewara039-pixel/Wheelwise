@@ -1,0 +1,7 @@
+.vscode/
+node_modules/
+src/
+tests/
+main.exe
+package-lock.json
+package.json
